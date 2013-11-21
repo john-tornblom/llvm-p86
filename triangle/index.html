@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <title>LLVM-P86 :: triangle.p86</title>
+    <script type="text/javascript" src="js/xx.js"></script>
+    <script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="js/sh_main.js"></script>
+    <script type="text/javascript" src="js/sh_pascal.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/sh_style.css">
+    <link type="text/css" rel="stylesheet" href="css/xx.css">
+  </head>
+
+  <body onload="xx_load('data/triangle');">
+    <div id="info_wrapper">
+      <div id="info" style="display: none;" class="fixed">
+        <table>
+          <tr>
+            <td>
+              <span class="xx_label">Mutation: </span>
+            </td>
+            <td>
+              <span id="report"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="xx_label">Source file: </span>
+            </td>
+            <td>
+              <span id="filename"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="xx_label">Mutant: </span>
+            </td>
+            <td>
+              <select id="current_mutant" style="display: none;">
+                <option value="0">Original</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="xx_label">MD5: </span>
+            </td>
+            <td>
+              <span id="md5"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="xx_label">Time stamp: </span>
+            </td>
+            <td>
+              <span id="timestamp"></span>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div id="popup" style="display: none;"></div>
+    <pre id="code" class="sh_pascal"></pre>
+  </body>
+</html>
