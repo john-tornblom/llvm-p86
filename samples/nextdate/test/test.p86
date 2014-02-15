@@ -1,0 +1,324 @@
+Module Test;
+
+$include (test.i86)
+$include (date.i86)
+
+Private Test;
+
+   Function Test_GetDate: boolean;
+   var
+      error : boolean;
+      d	    : T_DATE;
+      
+   begin
+      error := false;
+
+      d := GetDate(2013, 01, 01);
+
+      if d.year <> 2013 then
+	 error := true;
+
+      if d.month <> JAN then
+	 error := true;
+
+      if d.day <> 1 then
+	 error := true;
+      
+      Test_GetDate := error;
+   end; { Test_GetDate }
+
+
+   Function Test_Is31Days: boolean;
+   var
+      error : boolean;
+      
+   begin
+      error := false;
+
+      if not Is31Days(JAN) then
+	 error := true;
+
+      if Is31Days(FEB) then
+	 error := true;
+      
+      Test_Is31Days := error;
+   end; { Test_Is31Days }
+
+
+   Function Test_Is30Days: boolean;
+   var
+      error : boolean;
+      
+   begin
+      error := false;
+
+      if Is30Days(JAN) then
+	 error := true;
+
+      if Is30Days(FEB) then
+	 error := true;
+
+      if not Is30Days(APR) then
+	 error := true;
+      
+      Test_Is30Days := error;
+   end; { Test_Is30Days }
+
+
+   Function Test_IsLeapYear: boolean;
+   var
+      error : boolean;
+      
+   begin
+      error := false;
+
+      if IsLeapYear(T_YEAR(1581)) then
+	 error := true;
+
+      if not IsLeapYear(T_YEAR(1584)) then
+	 error := true;
+
+      if IsLeapYear(T_YEAR(1700)) then
+	 error := true;
+
+      if not IsLeapYear(T_YEAR(2000)) then
+	 error := true;
+      
+      Test_IsLeapYear := error;
+   end; { Test_IsLeapYear }
+
+
+   Function Test_NextMonth: boolean;
+   var
+      error : boolean;
+      
+   begin
+      error := false;
+
+      if NextMonth(JAN) <> FEB then
+	 error := true;
+
+      if NextMonth(JUN) <> JUL then
+	 error := true;
+
+      if NextMonth(DEC) <> JAN then
+	 error := true;
+      
+      Test_NextMonth := error;
+   end; { Test_NextMonth }
+
+
+   Function Test_NextDay: boolean;
+   var
+      error : boolean;
+      
+   begin
+      error := false;
+
+      if NextDay(1) <> 2 then
+	 error := true;
+
+      if NextDay(31) <> 1 then
+	 error := true;
+
+      if NextDay(20) <> 21 then
+	 error := true;
+      
+      Test_NextDay := error;
+   end; { Test_NextDay }
+
+
+   Procedure PrintDate(date : T_DATE);
+   begin
+      WriteLn(wrd(date.year), '-', wrd(date.month - 1), '-', wrd(date.day));
+   end; { PrintDate }
+
+   Function AssertDate(d1, d2 : T_DATE) : boolean;
+   var
+      error : boolean;
+      
+   begin
+      error := false;
+
+      if d1.year <> d2.year then
+	 error := true;
+
+      if d1.month <> d2.month then
+	 error := true;
+
+      if d1.day <> d2.day then
+	 error := true;
+
+      AssertDate := error;
+   end; { AssertDate }
+
+
+
+   Function Test_NextDate: boolean;
+   var
+      error : boolean;
+      d	    : T_DATE;
+      
+   begin    
+      error := false;
+
+      { JAN tests }
+      
+      d := GetDate(2013, 1, 1);
+      if NextDate(d) then
+	 error := true;
+      if AssertDate(d, GetDate(2013, 1, 2)) then
+	 error := true;
+      
+      d := GetDate(2013, 1, 31);
+      if NextDate(d) then
+	 error := true;
+      if AssertDate(d, GetDate(2013, 2, 1)) then
+	 error := true;
+
+      { FEB tests }
+      d := GetDate(2013, 2, 1);
+      if NextDate(d) then
+	 error := true;
+      if AssertDate(d, GetDate(2013, 2, 2)) then
+	 error := true;
+      
+      d := GetDate(2013, 2, 28);
+      if NextDate(d) then
+	 error := true;
+      if AssertDate(d, GetDate(2013, 3, 1)) then
+	 error := true;
+
+      { invalid date should return non-zero value }
+      d := GetDate(2013, 2, 29);
+      if not NextDate(d) then
+	 error := true;
+
+      d := GetDate(2013, 2, 30);
+      if not NextDate(d) then
+	 error := true;
+
+      d := GetDate(2013, 2, 31);
+      if not NextDate(d) then
+	 error := true;
+
+
+      { APR tests }
+      d := GetDate(2013, 4, 1);
+      if NextDate(d) then
+	 error := true;
+      if AssertDate(d, GetDate(2013, 4, 2)) then
+	 error := true;
+
+      d := GetDate(2013, 4, 30);
+      if NextDate(d) then
+	 error := true;
+      if AssertDate(d, GetDate(2013, 5, 1)) then
+	 error := true;
+
+      { invalid date should return non-zero value }
+      d := GetDate(2013, 4, 31);
+      if not NextDate(d) then
+	 error := true;
+      
+      { DEC tests }
+     d := GetDate(2013, 12, 1);
+      if NextDate(d) then
+	 error := true;
+      if AssertDate(d, GetDate(2013, 12, 2)) then
+	 error := true;
+
+      d := GetDate(2013, 12, 31);
+      if NextDate(d) then
+	 error := true;
+      if AssertDate(d, GetDate(2014, 1, 1)) then
+	 error := true;
+
+      
+      { Leap year tests }
+      d := GetDate(2016, 2, 1);
+      if NextDate(d) then
+	 error := true;
+      if AssertDate(d, GetDate(2016, 2, 2)) then
+	 error := true;
+      
+      d := GetDate(2016, 2, 29);
+      if NextDate(d) then
+	 error := true;
+      if AssertDate(d, GetDate(2016, 3, 1)) then
+	 error := true;
+      
+      { invalid date should return non-zero value }
+      d := GetDate(2016, 2, 30);
+      if not NextDate(d) then
+	 error := true;
+
+      { invalid date should return non-zero value }
+      d := GetDate(2016, 2, 31);
+      if not NextDate(d) then
+	 error := true;
+
+      if d.day <> 31 then
+	 error := true;
+
+      if d.month <> 1 then
+	 error := true;
+
+      if d.year <> 2016 then
+	 error := true;
+
+      { invalid date should return non-zero value }
+      d := GetDate(2016, 1, 32);
+      if not NextDate(d) then
+	 error := true;
+
+      if d.day <> 32 then
+	 error := true;
+
+      if d.month <> 0 then
+	 error := true;
+
+      if d.year <> 2016 then
+	 error := true;
+      
+      Test_NextDate := error;
+   end; { Test_NextDate }
+
+
+   Function RunTestSuite: boolean;
+   var
+      error : boolean;
+
+   begin    
+      error := false;
+
+      if Test_GetDate then
+	 error := true;
+
+      if Test_is31Days then
+	 error := true;
+
+      if Test_is30Days then
+	 error := true;
+
+      if Test_isLeapYear then
+	 error := true;
+
+      if Test_NextDay then
+	 error := true;
+
+      if Test_NextMonth then
+	 error := true;
+
+      if Test_NextDate then
+	 error := true;
+
+      RunTestSuite := error;
+   end; { RunTestSuite }
+
+
+. { Module Test }
+
+{ Local Variables: }
+{ mode: pascal }
+{ End: }

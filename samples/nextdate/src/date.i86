@@ -1,0 +1,26 @@
+Public Date;
+
+Type
+   T_DAY   = 1..31;
+   T_MONTH = (JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC);
+   T_YEAR  = longint;
+   
+   T_DATE  = Record
+		year  : T_YEAR;
+		month : T_MONTH;
+		day   : T_DAY;
+	     end;
+
+Function GetDate(year, month, day : longint) : T_DATE;
+
+Function Is31Days  (m : T_MONTH) : boolean;
+Function Is30Days  (m : T_MONTH) : boolean;
+Function IsLeapYear(y : T_YEAR)  : boolean;
+
+Function NextMonth(m : T_MONTH)    : T_MONTH;
+Function NextDay  (d : T_DAY)      : T_DAY;
+Function NextDate (var d : T_DATE) : boolean;
+
+{ Local Variables: }
+{ mode: pascal }
+{ End: }

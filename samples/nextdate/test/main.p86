@@ -1,0 +1,27 @@
+Module TestProgram;
+
+$include (test.i86)
+
+program TestProgram;
+var
+   n : longint;
+begin
+   { If no argument, print the number of mutants }
+   if ParamCount = 0 then begin
+      WriteLn(GetMutationCount);
+      Halt(0);
+   end;
+
+   n := ord(ParamStr(1));
+   SetMutation(n);
+   
+   WriteLn(GetMutationId);
+   if RunTestSuite then
+      halt(1)
+   else
+      halt(0);
+end.
+
+{ Local Variables: }
+{ mode: pascal }
+{ End: }

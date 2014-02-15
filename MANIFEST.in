@@ -1,0 +1,5 @@
+include LICENSE
+include AUTHORS
+include wwwroot/data/.keep
+recursive-include wwwroot/js *.js
+recursive-include wwwroot/css *.css

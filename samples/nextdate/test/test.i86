@@ -1,0 +1,7 @@
+Public Test;
+
+Function RunTestSuite: boolean;
+
+{ Local Variables: }
+{ mode: pascal }
+{ End: }

@@ -1,0 +1,18 @@
+Public Triangle;
+
+Type 
+   T_TYPE = (SCA, ISO, EQU, ERR);
+   T_TRIANGLE =  Record
+		    s1 : longint;
+		    s2 : longint;
+		    s3 : longint;
+		 end;
+
+Procedure SetTriangleSides (var t : T_TRIANGLE; s1, s2, s3: longint);
+Function  TrianglePerimeter(s1, s2, s3: longint) : longint;
+Function  TriangleArea     (s1, s2, s3: longint) : real;
+Function  TriangleType     (s1, s2, s3: longint) : T_TYPE;
+
+{ Local Variables: }
+{ mode: pascal }
+{ End: }

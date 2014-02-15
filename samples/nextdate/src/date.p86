@@ -1,0 +1,112 @@
+Module Date;
+
+$include (date.i86)
+
+Private Date;
+
+   Function NextDate(var d : T_DATE) : boolean;
+   var
+      year	: T_YEAR;
+      month	: T_MONTH;
+      day	: T_DAY;
+      error	: boolean;
+      
+   begin
+      error := false;
+      year := d.year;
+      month := d.month;
+      day := NextDay(d.day);
+
+      if is31Days(d.month) and (d.day >= 31) then begin
+	 day := 1;
+	 month := NextMonth(d.month);
+	 error := (d.day > 31);
+      end;
+      if is30Days(d.month) and (d.day >= 30) then begin
+	 day := 1;
+	 month := NextMonth(d.month);
+	 error := (d.day > 30);
+      end;
+      
+      if d.month = FEB then begin
+	 if d.day >= 29 then begin
+	    day := 1;
+	    month := NextMonth(d.month);
+	    error := (d.day > 29);
+	 end;
+	 if (d.day >= 28) and (not isLeapYear(d.year)) then begin
+	    day := 1;
+	    month := NextMonth(d.month);
+	    error := (d.day > 28);
+	 end;
+      end;
+
+      if (month = JAN) and (month <> d.month) then
+	 year := Succ(d.year);
+
+      if not error then begin
+	 d.year := year;
+	 d.month := month;
+	 d.day := day;
+      end;
+      
+      NextDate := error;
+   end; { NextDate }
+
+
+   Function GetDate(year, month, day : longint) : T_DATE;
+   begin
+      GetDate.year  := T_YEAR(year);
+      GetDate.month := T_MONTH(month - 1);
+      GetDate.day   := T_DAY(day);
+   end; { GetDate }
+
+
+   Function Is31Days(m : T_MONTH) : boolean;
+   begin
+      Is31Days := m in [JAN, MAR, MAY, JUL, AUG, OCT, DEC];
+   end; { Is31Days }
+
+
+   Function Is30Days(m : T_MONTH) : boolean;
+   begin
+      Is30Days := m in [APR, JUN, SEP, NOV];
+   end; { Is30Days }
+
+
+   Function IsLeapYear(y : T_YEAR) : boolean;
+   begin
+      if (y mod 400) = 0 then
+	 IsLeapYear := true
+      else if (y mod 100) = 0 then
+	 IsLeapYear := false
+      else if (y mod 4) = 0 then
+	 IsLeapYear := true
+      else
+	 IsLeapYear := false;
+   end; { isLeapYear }
+
+
+   Function NextMonth(m : T_MONTH) : T_MONTH;
+   begin
+      if m = DEC then
+	 NextMonth := JAN
+      else
+	 NextMonth := succ(m);
+   end; { NextMonth }
+
+
+   Function NextDay(d : T_DAY) : T_DAY;
+   begin
+      if d = 31 then
+	 NextDay := 1
+      else
+	 NextDay := succ(d);
+   end; { NextDay }
+
+
+. { Module Date }
+
+{ Local Variables: }
+{ mode: pascal }
+{ End: }
