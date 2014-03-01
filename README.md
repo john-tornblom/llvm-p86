@@ -6,7 +6,7 @@ Some of the most noteworthy features found in LLVM-P86 include:
 * Support for most language constructs, such as modules, records, with-statements, nested functions and recursive function calls.
 * Support for several mutation operators, including ROR, AOR, COR, SDL and BSR.
 * Ability to regenerate Pascal-86 source code after mutants has been encoded into a metaprogram, i.e. source-to-source.
-* Individual mutants can be visualized in a [web-based interface](http://john-tornblom.github.io/llvm-p86/triagle/). 
+* Individual mutants can be visualized in a [web-based interface](http://john-tornblom.github.io/llvm-p86/triangle/). 
 
 
 
