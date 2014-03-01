@@ -31,8 +31,86 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h1>
-<a name="coming-soon" class="anchor" href="#coming-soon"><span class="octicon octicon-link"></span></a>Coming soon</h1>
+        <p>LLVM-P86 is a compiler and mutation testing framework intended for the programming language Pascal-86. Compared to a regular compiler, LLVM-P86 is able to create mutated versions of its input and encode several mutants into a single program. The compiler front-end is written entirely in Python, while the code generation provided by LLVM is written in C++.</p>
+
+<p>Some of the most noteworthy features found in LLVM-P86 include:</p>
+
+<ul>
+<li>Support for most language constructs, such as modules, records, with-statements, nested functions and recursive function calls.</li>
+<li>Support for several mutation operators, including ROR, AOR, COR, SDL and BSR.</li>
+<li>Ability to regenerate Pascal-86 source code after mutants has been encoded into a metaprogram, i.e. source-to-source.</li>
+<li>Individual mutants can be visualized in a <a href="triagle/">web-based interface</a>. </li>
+</ul><h3>
+<a name="about-mutation-testing" class="anchor" href="#about-mutation-testing"><span class="octicon octicon-link"></span></a>About Mutation Testing</h3>
+
+<p>Mutation testing is an automatic fault-based testing technique that makes syntactic changes to a program under test in order to simulate real faults otherwise caused by a programmer. Similar to structural coverage criteria such as <em>statement coverage</em>, mutation testing is used to assess the quality of a test suite. After a syntactic change has been made, the program is referred to as a <em>mutant</em> that can either <em>survive</em> a test suite, or be <em>killed</em> by one. If a mutant is killed, it means that the test suite has detected the syntactic change and reported it as an error, resulting in an increased <em>mutation score</em>. If a mutant survives, it means that the test suite failed to detect the fault and the mutation score is decreased.</p>
+
+<p>More information is available in my master thesis, soon to be published at <a href="http://diva-portal.org">DiVA</a>.</p>
+
+<h3>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h3>
+
+<p>LLVM-P86 depend on the following software packages:</p>
+
+<ul>
+<li>
+<a href="http://python.org">python</a> (tested with 2.7 and 3.3)</li>
+<li>
+<a href="http://www.dabeaz.com/ply">ply</a> (tested with 3.4)</li>
+<li>
+<a href="http://www.llvmpy.org">llvmpy</a> (tested with 0.11.3, compiled for llvm-3.2)</li>
+</ul><p>For people running Ubuntu 13.10, all packages are available via apt-get.</p>
+
+<pre><code>$ sudo apt-get install python2.7 python-ply python-llvm
+</code></pre>
+
+<p>Once the dependencies have been met, the source code needs to be prepared by issuing the following set of commands.</p>
+
+<pre><code>$ git clone https://github.com/john-tornblom/llvm-p86.git
+$ cd llvm-p86
+$ python setup.py prepare
+</code></pre>
+
+<p>There are a few small sample applications available in <a href="https://github.com/john-tornblom/llvm-p86/blob/master/samples/snippets">the samples folder</a>. To execute one of them directly using the LLVM JIT compiler, just type:</p>
+
+<pre><code>$ ./llvm-p86 -e samples/snippets/if.p
+</code></pre>
+
+<p>LLVM-P86 also ships with two Pascal-86 modules used to demonstrates how mutation testing can be put into practice. Unfortunately, LLVM-P86 is not able to link object files into a single binary, and thus gcc is required. From the project root folder, execute the following set of commands:</p>
+
+<pre><code>$ cd samples/triangle
+$ ./run_mutants.sh operator
+</code></pre>
+
+<p>where <em>operator</em> is one of the following:</p>
+
+<ul>
+<li>ror - relational operator replacement (&lt;, &lt;=, =, &lt;&gt;, &gt;=, &gt;)</li>
+<li>cor - conditional operator replacement (and, or)</li>
+<li>aor - arithmetic operator replacement (+, -, *, /, div, mod)</li>
+<li>sdl - statement deletion</li>
+<li>dcc - decision/condition coverage</li>
+<li>sc  - statement coverage</li>
+</ul><p>To view each individual mutant, launch the small python webserver located in the root folder of LLVM-86 (preferably from a second terminal window)</p>
+
+<pre><code>./llvm-p86-webserver -r wwwroot/
+</code></pre>
+
+<p>Now, point your browser to <a href="http://localhost:8000">localhost:8000</a>.</p>
+
+<h3>
+<a name="missing-language-features" class="anchor" href="#missing-language-features"><span class="octicon octicon-link"></span></a>Missing Language Features</h3>
+
+<p>Since LLVM-P86 was designed with a specific code base in mind, some language features are missing.</p>
+
+<ul>
+<li>There is no support for reading or writing files, other than stdin and stdout.</li>
+<li>Procedures and functions cannot be passed as arguments.</li>
+<li>The packed keyword is not supported.</li>
+<li>None of the I/O port procedures has been implemented, e.g. <em>Inwrd</em> and <em>Outwrd</em>.</li>
+<li>None of the interrupt procedures has been implemented.</li>
+<li>Reading Boolean values from the keyboard using <em>Read</em> will result in a crash.</li>
+</ul>
       </section>
     </div>
 
