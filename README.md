@@ -13,7 +13,7 @@ Some of the most noteworthy features found in LLVM-P86 include:
 ### About Mutation Testing
 Mutation testing is an automatic fault-based testing technique that makes syntactic changes to a program under test in order to simulate real faults otherwise caused by a programmer. Similar to structural coverage criteria such as _statement coverage_, mutation testing is used to assess the quality of a test suite. After a syntactic change has been made, the program is referred to as a _mutant_ that can either _survive_ a test suite, or be _killed_ by one. If a mutant is killed, it means that the test suite has detected the syntactic change and reported it as an error, resulting in an increased _mutation score_. If a mutant survives, it means that the test suite failed to detect the fault and the mutation score is decreased.
 
-More information is available in my master thesis, soon to be published at [DiVA](http://diva-portal.org).
+More information is available in [my master thesis](http://urn.kb.se/resolve?urn=urn:nbn:se:liu:diva-105456)
 
 ### Getting Started
 LLVM-P86 depend on the following software packages:
