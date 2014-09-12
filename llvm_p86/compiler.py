@@ -143,7 +143,6 @@ class Compiler(object):
         self.mutants = []
         self.defines = dict()
         self.includes = ['.']
-        self.target_triple = ''
 
     def define(self, d):
         d = d.split('=')
