@@ -38,9 +38,12 @@ from . import log
 try:
     from llvm import ee
     from llvm import passes
+    from llvm import target
     import ctypes
     from . import codegen
     from . import fn
+
+    target.initialize_all()
 except ImportError:
     print('Cannot find llvmpy, code generation will not function')
     pass
