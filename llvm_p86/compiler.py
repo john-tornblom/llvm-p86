@@ -388,6 +388,8 @@ class Compiler(object):
         if self.ctx is None or self.ctx.module is None:
             return
 
+        if not cpu: cpu = 'generic'
+
         tm = ee.TargetMachine.new(triple, cpu, attrs, 0)
         obj = tm.emit_object(self.ctx.module)
 
