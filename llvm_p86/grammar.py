@@ -26,6 +26,7 @@ Grammar rules originally taken from:
   http://www.moorecad.com/standardpascal/pascal.y
 '''
 
+import os
 from ply import yacc
 
 from . import log
@@ -1628,6 +1629,7 @@ def parser(debug=False):
                      errorlog=logger,
                      optimize=1,
                      tabmodule=tab,
+                     outputdir=os.path.dirname(__file__),
                      module=mod)
 
 

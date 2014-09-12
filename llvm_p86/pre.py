@@ -437,6 +437,7 @@ def scanner(debug=False):
                    errorlog=logger,
                    optimize=1,
                    lextab=tab,
+                   outputdir=os.path.dirname(__file__),
                    module=mod)
 
 
@@ -452,6 +453,7 @@ def parser(debug=False):
                      errorlog=logger,
                      optimize=1,
                      tabmodule=tab,
+                     outputdir=os.path.dirname(__file__),
                      module=mod)
 
 

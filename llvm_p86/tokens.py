@@ -27,6 +27,7 @@ Lexer rules originally taken from:
 '''
 
 import sys
+import os
 
 from ply import lex
 
@@ -398,4 +399,5 @@ def scanner(debug=False):
                    errorlog=logger,
                    optimize=1,
                    lextab=tab,
+                   outputdir=os.path.dirname(__file__),
                    module=mod)
