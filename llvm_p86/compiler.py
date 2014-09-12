@@ -118,7 +118,7 @@ class PrintVisitor(ast.NodeVisitor):
             pos = '?'
 
         ty = node.type
-        if not pos:
+        if not ty:
             ty = '(?)'
 
         prefix = str(pos) + '  \t' + str(ty.__class__.__name__[0:-4]) + '  \t'
