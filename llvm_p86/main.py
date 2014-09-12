@@ -89,8 +89,12 @@ def run(argv=None):
         parser.add_argument("-b", "--bit-code", dest="bit_code", metavar="PATH", action="store", help="save LLVM-IR (bit code) to PATH")
         parser.add_argument("-o", "--object-code", dest="obj_code", metavar="PATH", action="store", help="save object code to PATH")
         parser.add_argument("-c", "--source-code", dest="src_code", metavar="PATH", action="store", help="save source code to PATH")
-        parser.add_argument("-O", "--optimize", dest="optimize", metavar="LEVEL", action="store", choices=['0', '1', '2', '3'], default='0', help="run various optimizations on the LLVM-IR code")
-        parser.add_argument("-T", "--target", dest="target", action="store", default='', help="define the target triple, e.g. x86_64-pc-linux or i686-pc-win32")
+        parser.add_argument("-O", "--optimize", dest="opt", metavar="LEVEL", action="store", choices=['0', '1', '2', '3'], default='0', help="run various optimizations on the LLVM-IR code")
+
+        parser.add_argument("-T", "--triple", dest="triple", action="store", default='', help="define the target triple, e.g. x86_64-pc-linux or i686-pc-win32")
+        parser.add_argument("-mcpu", dest="cpu", default='', help='target specific cpu type')
+        parser.add_argument("-mattrs", dest="attrs", default='', help='target specific attributes')
+
         parser.add_argument("-D", "--define", dest="defs", metavar="DEF", action="append", help="define constants for the preprocessor")
         parser.add_argument("-I", "--include", dest="incs", metavar="PATH", action="append", help="define include directories for the preprocessor")
         parser.add_argument("-e", "--execute", dest="execute", action="store_true", help="execute the main function using the LLVM JIT compiler")
@@ -139,17 +143,17 @@ def run(argv=None):
         if synthesize:
             c.synthesize()
 
-        if args.optimize and synthesize:
-            c.optimize(int(args.optimize))
+        if args.opt and synthesize:
+            c.optimize(int(args.opt))
 
         if args.ir_code:
-            c.save_ir(args.ir_code, args.target)
+            c.save_ir(args.ir_code, args.triple)
 
         if args.bit_code:
-            c.save_bit_code(args.bit_code, args.target)
+            c.save_bit_code(args.bit_code, args.triple)
 
         if args.obj_code:
-            c.save_obj_code(args.obj_code, args.target)
+            c.save_obj_code(args.obj_code, args.triple, args.cpu, args.attrs)
 
         if args.execute:
             c.execute(args.args)
